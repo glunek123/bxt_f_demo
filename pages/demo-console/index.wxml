@@ -1,0 +1,48 @@
+<view class="page with-action">
+  <view class="demo-pill">仅限 PAC 演示</view>
+  <view class="page-title">演示控制台</view>
+  <view class="page-lead">这里模拟后台事件与外部回调，不是身份切换。正式用户页面不出现审核、指定律师接受或对方入群按钮。</view>
+
+  <view class="card dark snapshot">
+    <view class="between">
+      <view><view class="snapshot-label">当前聚合状态</view><view class="snapshot-status">{{statusText}}</view></view>
+      <view class="tag console-tag">{{status}}</view>
+    </view>
+    <view wx:if="{{state.matchRound}}" class="snapshot-grid">
+      <view><text>{{state.matchRound.roundNo}}</text><label>轮次</label></view>
+      <view><text>{{state.matchRound.currentBatchNo || '—'}}</text><label>当前批</label></view>
+      <view><text>{{state.matchRound.candidateCount}}</text><label>冻结候选</label></view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeCandidates.length}}" class="card">
+    <view class="between"><view class="card-title">PAC 内部候选视图</view><view class="tag tag-danger">用户不可见</view></view>
+    <view class="card-sub">推荐分、顺序和候选姓名仅用于内部演示与排障。</view>
+    <view class="candidate" wx:for="{{activeCandidates}}" wx:key="name">
+      <view><view class="candidate-name">{{item.name}} · {{item.practiceArea}}</view><view class="card-sub">{{item.invitationStatus}}</view></view>
+      <view class="score">{{item.score}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">预置业务场景</view>
+  <view class="scenario-list">
+    <view wx:for="{{scenarios}}" wx:key="code" class="scenario" data-code="{{item.code}}" bindtap="load">
+      <view class="flex1"><view class="scenario-name">{{item.name}}</view><view class="scenario-desc">{{item.desc}}</view></view>
+      <view class="scenario-arrow">{{loadingCode === item.code ? '…' : '›'}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">逐步讲解模式</view>
+  <view class="card">
+    <view class="card-title">推进下一个后台事件</view>
+    <view class="card-sub">依次推进：发布 → 审核 → 预占群 → 有效接受 → 券抵扣零支付 → 双方入口与回调 → 沟通 → 结束记录。</view>
+    <button class="btn btn-primary btn-block mt24" loading="{{advancing}}" bindtap="advance">推进一步</button>
+    <button class="btn btn-secondary btn-block" bindtap="openFormal">查看正式用户页面</button>
+  </view>
+
+  <view class="danger-note">所有数据均为虚构 Mock；未连接真实 AppID、AI、微信支付、企微、通知或律师身份系统。</view>
+
+  <view class="action-bar">
+    <button class="btn btn-danger btn-block" bindtap="reset">重置全部演示数据</button>
+  </view>
+</view>

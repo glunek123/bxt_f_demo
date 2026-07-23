@@ -1,0 +1,19 @@
+.status-card { padding-top: 34rpx; }
+.status-title { color: #1D1D1F; font-size: 36rpx; font-weight: 700; line-height: 1.2; }
+.batch-dots { display: flex; gap: 10rpx; }
+.batch-dot {
+  flex: 1; min-height: 98rpx; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #86868B; background: #F2F2F4; border-radius: 18rpx; font-size: 21rpx;
+}
+.batch-dot.on { color: #FFFFFF; background: #0B1F3A; }
+.batch-dot.done { color: #207A3C; background: rgba(52,199,89,.1); }
+.countdown { color: #FF3B30; font-size: 30rpx; font-variant-numeric: tabular-nums; font-weight: 700; }
+.price { margin: 30rpx 0; color: #1D1D1F; font-size: 66rpx; font-weight: 700; }
+.currency { margin-right: 8rpx; font-size: 30rpx; }
+.voucher-row { display: flex; align-items: center; justify-content: space-between; padding: 22rpx; background: rgba(52,199,89,.07); border-radius: 20rpx; }
+.voucher-name, .join-name { font-size: 27rpx; font-weight: 600; }
+.join-row { min-height: 112rpx; display: flex; align-items: center; justify-content: space-between; gap: 20rpx; border-bottom: 1rpx solid rgba(0,0,0,.06); }
+.join-row:last-of-type { border-bottom: 0; }
+.dark-copy { margin-top: 14rpx; color: rgba(255,255,255,.72); font-size: 25rpx; line-height: 1.65; }
+.dual-actions { display: flex; gap: 14rpx; }
+.fail-btn { width: 32%; padding: 0 16rpx; font-size: 25rpx; }

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "P03 匹配与邀请",
+  "usingComponents": {
+    "step-bar": "/components/step-bar/step-bar"
+  }
+}

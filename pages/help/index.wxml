@@ -1,0 +1,15 @@
+<!-- pages/help/index.wxml -->
+<view class="page">
+  <view class="demo-pill">帮助与发布须知</view>
+  <view class="page-title">常见问题</view>
+
+  <view class="faq-item" wx:for="{{faqs}}" wx:key="q">
+    <view class="faq-q" data-i="{{index}}" bindtap="toggle">
+      <text>{{item.q}}</text>
+      <text class="arrow {{item.open ? 'open' : ''}}">›</text>
+    </view>
+    <view wx:if="{{item.open}}" class="faq-a">{{item.a}}</view>
+  </view>
+
+  <view class="btn btn-primary btn-block mt16" bindtap="goFeedback">未解决问题？去反馈</view>
+</view>

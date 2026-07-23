@@ -1,0 +1,117 @@
+<view class="page with-action">
+  <view class="demo-pill">P01 · 结构化发布</view>
+  <view class="page-title">发布协作</view>
+  <view class="page-lead">请勿填写当事人姓名、联系方式、完整案号或详细住址。</view>
+
+  <view class="seg mt32">
+    <view class="seg-item {{mode === 'FORM' ? 'on' : ''}}" data-mode="FORM" bindtap="switchMode">结构化填写</view>
+    <view class="seg-item {{mode === 'AI' ? 'on' : ''}}" data-mode="AI" bindtap="switchMode">智能整理</view>
+  </view>
+
+  <view wx:if="{{mode === 'AI'}}" class="card mt24">
+    <view class="card-title">描述协作需求</view>
+    <view class="card-sub">本地 Demo 先进行敏感内容阻断，再生成可编辑候选字段。</view>
+    <textarea class="textarea mt24" maxlength="500" placeholder="例如：下周需在上海协助复制一份公开可调取的诉讼档案材料……" value="{{description}}" bindinput="onDescription"/>
+    <view class="counter">{{charCount}} / 500（最少 10 字）</view>
+    <button class="btn btn-secondary btn-block mt24" loading="{{extracting}}" bindtap="extract">整理为结构化字段</button>
+  </view>
+
+  <view wx:else>
+    <view class="section-title">服务场景</view>
+    <view class="scene-picker">
+      <view class="scene-option {{form.sceneCode === 'FILE_RETRIEVAL' ? 'on' : ''}}" data-scene="FILE_RETRIEVAL" bindtap="chooseScene">异地调档</view>
+      <view class="scene-option {{form.sceneCode === 'LAWYER_MEETING' ? 'on' : ''}}" data-scene="LAWYER_MEETING" bindtap="chooseScene">律师会见</view>
+      <view class="scene-option pilot" data-scene="COURT_APPEARANCE" bindtap="chooseScene">代开庭试点</view>
+    </view>
+
+    <view class="card mt24">
+      <view class="field">
+        <view class="field-label">目标城市 <text class="req">*</text></view>
+        <input class="input" data-key="city" value="{{form.city}}" bindinput="setField"/>
+        <view wx:if="{{errors.city}}" class="error">{{errors.city}}</view>
+      </view>
+      <view class="field">
+        <view class="field-label">办理机构 / 场所 <text class="req">*</text></view>
+        <input class="input {{institutionLow ? 'low' : ''}}" data-key="institution" value="{{form.institution}}" bindinput="setField"/>
+        <view wx:if="{{institutionLow}}" class="hint orange">智能整理置信度较低，请逐项确认</view>
+      </view>
+      <view class="field">
+        <view class="field-label">协作事项 <text class="req">*</text></view>
+        <input class="input" data-key="serviceItem" value="{{form.serviceItem}}" bindinput="setField"/>
+      </view>
+      <view class="field">
+        <view class="field-label">业务领域</view>
+        <input class="input" data-key="practiceArea" value="{{form.practiceArea}}" bindinput="setField"/>
+      </view>
+      <view class="field">
+        <view class="field-label">停止匹配时间 <text class="req">*</text></view>
+        <input class="input" data-key="matchDeadlineAt" value="{{form.matchDeadlineAt}}" bindinput="setField"/>
+        <view class="hint">可调整，必须晚于当前时间且早于服务时间。</view>
+        <view wx:if="{{errors.matchDeadlineAt}}" class="error">{{errors.matchDeadlineAt}}</view>
+      </view>
+      <view class="field">
+        <view class="field-label">期望服务时间 <text class="req">*</text></view>
+        <input class="input {{serviceTimeLow ? 'low' : ''}}" data-key="serviceAt" value="{{form.serviceAt}}" bindinput="setField"/>
+        <view class="hint">演示提前量：调档 120 分钟，会见 240 分钟；非正式运营默认值。</view>
+        <view wx:if="{{errors.serviceAt}}" class="error">{{errors.serviceAt}}</view>
+      </view>
+    </view>
+
+    <view class="section-title">{{form.sceneCode === 'LAWYER_MEETING' ? '会见信息' : '调档信息'}}</view>
+    <view class="card">
+      <block wx:if="{{form.sceneCode === 'FILE_RETRIEVAL'}}">
+        <view class="field"><view class="field-label">档案类型</view><input class="input" data-key="archiveType" value="{{form.structuredFields.archiveType}}" bindinput="setStructured"/></view>
+        <view class="field"><view class="field-label">调取方式</view><input class="input" data-key="retrievalMethods" value="{{form.structuredFields.retrievalMethods}}" bindinput="setStructured"/></view>
+        <view class="field"><view class="field-label">材料准备</view><input class="input" data-key="materialsStatus" value="{{form.structuredFields.materialsStatus}}" bindinput="setStructured"/></view>
+      </block>
+      <block wx:else>
+        <view class="field"><view class="field-label">会见类型</view><input class="input" data-key="meetingType" value="{{form.structuredFields.meetingType}}" bindinput="setStructured"/></view>
+        <view class="field"><view class="field-label">预约状态</view><input class="input" data-key="appointmentStatus" value="{{form.structuredFields.appointmentStatus}}" bindinput="setStructured"/></view>
+        <view class="field"><view class="field-label">需反馈事项</view><input class="input" data-key="feedbackItems" value="{{form.structuredFields.feedbackItems}}" bindinput="setStructured"/></view>
+      </block>
+      <view class="field">
+        <view class="field-label">脱敏补充说明</view>
+        <textarea class="textarea" maxlength="300" data-key="supplement" value="{{form.supplement}}" bindinput="setField" placeholder="仅补充完成协作所需的信息"/>
+        <view wx:if="{{errors.supplement}}" class="error">{{errors.supplement}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <view class="action-row">
+      <button class="btn btn-ghost draft-btn" bindtap="saveDraft">存草稿</button>
+      <button class="btn btn-primary preview-btn" bindtap="preview">预览并提交</button>
+    </view>
+  </view>
+
+  <view wx:if="{{noticeOpen}}" class="mask">
+    <view class="sheet">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">发布前请确认</view>
+      <view class="notice-copy">
+        <view>• 只填写协作所需的结构化、脱敏信息。</view>
+        <view>• 平台连接费不含律师服务费，服务费用由双方沟通。</view>
+        <view>• 平台不采集企微群聊内容。</view>
+        <view>• 代开庭当前仅登记试点意向，不进入匹配。</view>
+      </view>
+      <button class="btn btn-primary btn-block mt32" bindtap="acknowledgeNotice">我已阅读并继续</button>
+      <button class="btn btn-secondary btn-block" bindtap="closeNotice">暂不发布</button>
+    </view>
+  </view>
+
+  <view wx:if="{{summaryOpen}}" class="mask">
+    <view class="sheet">
+      <view class="sheet-handle"></view>
+      <view class="between"><view class="sheet-title">确认发布摘要</view><view class="text-action" bindtap="closeSummary">返回修改</view></view>
+      <view class="info-note mt24">以下确认后的结构化字段才是发布内容，原始描述不会进入邀请消息，也不会保存在客户端。</view>
+      <view class="card mt24">
+        <view class="kv"><view class="k">场景</view><view class="v">{{form.sceneCode === 'LAWYER_MEETING' ? '律师会见' : '异地调档'}}</view></view>
+        <view class="kv"><view class="k">城市 / 机构</view><view class="v">{{form.city}} · {{form.institution}}</view></view>
+        <view class="kv"><view class="k">协作事项</view><view class="v">{{form.serviceItem}}</view></view>
+        <view class="kv"><view class="k">停止匹配</view><view class="v">{{form.matchDeadlineAt}}</view></view>
+        <view class="kv"><view class="k">期望服务</view><view class="v">{{form.serviceAt}}</view></view>
+      </view>
+      <button class="btn btn-primary btn-block" loading="{{submitting}}" bindtap="submit">确认并提交审核</button>
+    </view>
+  </view>
+</view>

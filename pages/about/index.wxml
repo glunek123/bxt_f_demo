@@ -1,0 +1,40 @@
+<!-- pages/about/index.wxml -->
+<view class="page">
+  <view class="card dark" style="text-align:center;padding:54rpx 30rpx">
+    <view class="card-title">异地律师协作网络</view>
+    <view class="page-lead" style="margin-top:12rpx">面向律师的异地协作连接平台 · MVP</view>
+    <text class="tag" style="margin-top:18rpx;color:#fff;background:rgba(255,255,255,.14)">PAC Demo v2.0</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">演示环境</view>
+    <view class="divider"></view>
+    <view class="kv"><text class="k">Provider</text><text class="v">Fake（本地 Mock）</text></view>
+    <view class="kv"><text class="k">支付模式</text><text class="v">Mock（不调用微信支付）</text></view>
+    <view class="kv"><text class="k">企微模式</text><text class="v">Mock（不接入企业微信）</text></view>
+    <view class="kv"><text class="k">数据来源</text><text class="v">本地模拟，不连接真实后端</text></view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">能力边界</view>
+    <view class="divider"></view>
+    <view class="muted" style="line-height:1.9;font-size:24rpx">
+      <view>· 页面定义：P00 首页、P01 发布协作、P02 协作详情、P03 邀请详情、P04 我的协作、P05 认证与接收设置。</view>
+      <view>· 主流程：发布 → 审核 → 预占群 → 分批邀请 → 唯一接受 → 支付/券抵扣 → 双方回调确认入群 → 沟通 → 结束记录。</view>
+      <view>· 真实微信订阅消息、真实微信支付、真实企业微信、隐私法务与生产托管未在此 Demo 中验收。</view>
+      <view>· 平台不保存真实原始案情，不展示真实个人信息，不采集企微群聊正文。</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">PAC 会议演示说明</view>
+    <view class="divider"></view>
+    <view class="muted" style="line-height:1.9;font-size:24rpx">
+      <view>· 本原型用于在 PAC 会议展示「异地律师协作」产品构想与交互流程。</view>
+      <view>· 所有律师、法院、城市均为虚构演示数据。</view>
+      <view>· 如需评估生产方案，请结合真实合规、支付、企微与托管能力另行立项。</view>
+    </view>
+  </view>
+
+  <view class="btn btn-ghost btn-block" bindtap="goPrivacy">查看隐私说明</view>
+</view>

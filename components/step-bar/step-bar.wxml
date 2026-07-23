@@ -1,0 +1,7 @@
+<view class="step-wrap">
+  <view wx:for="{{steps}}" wx:key="index" class="step {{index < current ? 'done' : ''}} {{index === current ? 'current' : ''}}">
+    <view class="dot">{{index < current ? '✓' : index + 1}}</view>
+    <view class="label">{{item}}</view>
+    <view wx:if="{{index < steps.length - 1}}" class="line"></view>
+  </view>
+</view>

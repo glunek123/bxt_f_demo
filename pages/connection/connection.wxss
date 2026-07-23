@@ -1,0 +1,38 @@
+/* pages/connection/connection.wxss */
+
+.mask {
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.qr-sheet {
+  width: 560rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 36rpx 32rpx 32rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.qr-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #13294B;
+}
+.qr-sub {
+  font-size: 22rpx;
+  color: #8a93a6;
+  margin-top: 8rpx;
+}
+.qr-canvas {
+  width: 440rpx;
+  height: 440rpx;
+  margin: 24rpx 0 8rpx;
+  border: 2rpx solid #eef1f6;
+  border-radius: 8rpx;
+}

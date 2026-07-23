@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/publish/publish",
+    "pages/collaboration/collaboration",
+    "pages/invitation/invitation",
+    "pages/collaboration/list",
+    "pages/profile/index",
+    "pages/profile/receiver/index",
+    "pages/demo-console/index",
+    "pages/pilot/index",
+    "pages/audit/audit",
+    "pages/match/match",
+    "pages/connection/connection",
+    "pages/rematch/rematch",
+    "pages/settings/index",
+    "pages/feedback/index",
+    "pages/messages/index",
+    "pages/vouchers/index",
+    "pages/orders/index",
+    "pages/help/index",
+    "pages/about/index",
+    "pages/privacy/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F5F5F7",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "异地律师协作",
+    "backgroundColor": "#F5F5F7",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#86868B",
+    "selectedColor": "#0B1F3A",
+    "backgroundColor": "#FBFBFD",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/collaboration/list",
+        "text": "协作"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

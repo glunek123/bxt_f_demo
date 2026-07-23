@@ -1,0 +1,6 @@
+.result { margin-top: 52rpx; padding-top: 54rpx; text-align: center; }
+.result-mark {
+  width: 88rpx; height: 88rpx; margin: 0 auto 24rpx; display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; background: #34C759; border-radius: 50%; font-size: 40rpx; font-weight: 700;
+}
+.result-title { font-size: 36rpx; font-weight: 700; }

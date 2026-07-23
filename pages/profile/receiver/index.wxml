@@ -1,0 +1,35 @@
+<view class="page" wx:if="{{settings}}">
+  <view class="demo-pill">P05 · 当前律师设置</view>
+  <view class="page-title">认证与接收</view>
+  <view class="page-lead">这不是身份切换。设置只决定当前认证律师可接收哪些邀请。</view>
+
+  <view class="section-title">认证状态</view>
+  <view class="card">
+    <view class="between">
+      <view><view class="card-title">律师认证有效</view><view class="card-sub">认证信息由服务端会话关联，不接受 URL 或客户端传入身份。</view></view>
+      <view class="tag tag-green">有效</view>
+    </view>
+  </view>
+
+  <view class="section-title">接收范围</view>
+  <view class="card">
+    <view class="cell" data-key="serviceCities" data-title="服务城市" bindtap="edit"><view><view class="cell-label">服务城市</view><view class="cell-sub">{{settings.serviceCitiesText}}</view></view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-key="scenes" data-title="可接场景" bindtap="edit"><view><view class="cell-label">可接场景</view><view class="cell-sub">异地调档、律师会见</view></view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-key="serviceItems" data-title="协作事项" bindtap="edit"><view><view class="cell-label">协作事项</view><view class="cell-sub">{{settings.serviceItemsText}}</view></view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-key="practiceAreas" data-title="业务领域" bindtap="edit"><view><view class="cell-label">业务领域</view><view class="cell-sub">{{settings.practiceAreasText}}</view></view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-key="availability" data-title="可接时间" bindtap="edit"><view><view class="cell-label">可接时间</view><view class="cell-sub">{{settings.availability}}</view></view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+  </view>
+
+  <view class="section-title">能力与通知</view>
+  <view class="card">
+    <view class="switch-row"><view><view class="cell-label">接收邀请总开关</view><view class="cell-sub">关闭后不进入新一轮候选资格筛选</view></view><switch color="#0B1F3A" checked="{{settings.receivingEnabled}}" data-key="receivingEnabled" bindchange="toggle"/></view>
+    <view class="switch-row"><view><view class="cell-label">站内邀请箱</view><view class="cell-sub">系统兜底入口，始终保留</view></view><switch color="#0B1F3A" checked disabled/></view>
+    <view class="switch-row"><view><view class="cell-label">通知授权</view><view class="cell-sub">{{settings.notificationState === 'AUTHORIZED' ? '已授权接收服务通知' : '未授权'}}</view></view><switch color="#0B1F3A" checked="{{settings.notificationState === 'AUTHORIZED'}}" disabled/></view>
+  </view>
+
+  <view class="section-title">企微协作能力</view>
+  <view class="card">
+    <view class="between"><view><view class="card-title">企微能力就绪</view><view class="card-sub">入群结果仍以服务端回调或查询对账确认。</view></view><view class="tag tag-green">READY</view></view>
+    <button class="btn btn-secondary btn-block mt24" bindtap="goInbox">打开站内邀请箱</button>
+  </view>
+</view>

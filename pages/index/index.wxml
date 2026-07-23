@@ -1,0 +1,68 @@
+<view class="page">
+  <view class="between">
+    <view class="demo-pill">PAC Demo · 虚构数据</view>
+    <view class="text-action" bindtap="goHelp">发布须知</view>
+  </view>
+
+  <view class="page-title">让异地协作<br/>更快连接</view>
+  <view class="page-lead">发布结构化需求，平台审核后按批邀请合适律师。律师服务费用由双方自行沟通。</view>
+
+  <view class="launch-card" bindtap="goPublish">
+    <view>
+      <view class="launch-title">发布协作需求</view>
+      <view class="launch-sub">支持异地调档、律师会见</view>
+    </view>
+    <view class="launch-arrow">→</view>
+  </view>
+
+  <view wx:if="{{pendingInvite}}" class="section-title">待处理</view>
+  <view wx:if="{{pendingInvite}}" class="card invite-card" bindtap="goInvitation">
+    <view class="between">
+      <view class="tag tag-warn">邀请待处理</view>
+      <view class="text-action">现在查看</view>
+    </view>
+    <view class="invite-title">{{pendingInvite.scene}} · {{pendingInvite.city}}</view>
+    <view class="card-sub">{{pendingInvite.serviceItem}} · {{pendingInvite.serviceAtText}}</view>
+  </view>
+
+  <view class="section-title">进行中的协作</view>
+  <view wx:if="{{activeItems.length}}">
+    <view wx:for="{{activeItems}}" wx:key="id" class="card active-card" bindtap="goCurrent">
+      <view class="between">
+        <view class="tag tag-navy">{{item.statusText}}</view>
+        <view class="text-action">{{item.nextAction}}</view>
+      </view>
+      <view class="active-title">{{item.scene}} · {{item.city}}</view>
+      <view class="card-sub">{{item.institution}}</view>
+      <view class="active-time">期望时间 {{item.expectTime}}</view>
+    </view>
+  </view>
+  <view wx:else class="card empty">
+    <view class="empty-title">还没有进行中的协作</view>
+    <view class="empty-sub">发布后可在这里查看审核、匹配、连接与协作进度。</view>
+  </view>
+
+  <view class="section-title">服务场景</view>
+  <view class="scene-grid">
+    <view class="scene-card" bindtap="goPublish">
+      <view class="scene-symbol">档</view>
+      <view class="scene-name">异地调档</view>
+      <view class="scene-desc">查阅、复制档案</view>
+    </view>
+    <view class="scene-card" bindtap="goPublish">
+      <view class="scene-symbol">会</view>
+      <view class="scene-name">律师会见</view>
+      <view class="scene-desc">预约与现场协作</view>
+    </view>
+    <view class="scene-card pilot" data-scene="COURT_APPEARANCE" bindtap="goPilot">
+      <view class="between">
+        <view class="scene-symbol">庭</view>
+        <view class="tag tag-gray">试点</view>
+      </view>
+      <view class="scene-name">代开庭意向</view>
+      <view class="scene-desc">仅登记，不进入匹配</view>
+    </view>
+  </view>
+
+  <view class="privacy-line">平台不采集企微群聊内容 · 敏感信息请勿填写</view>
+</view>

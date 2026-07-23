@@ -1,0 +1,56 @@
+<view class="page" wx:if="{{profile}}">
+  <view class="between">
+    <view class="demo-pill">PAC Demo · 虚构身份</view>
+    <view class="text-action" data-url="/pages/settings/index" bindtap="go">设置</view>
+  </view>
+
+  <view class="profile-head">
+    <view class="avatar">{{profile.avatar}}</view>
+    <view class="flex1">
+      <view class="profile-name">{{profile.name}}</view>
+      <view class="card-sub">{{profile.city}} · 执业 {{profile.years}} 年</view>
+    </view>
+    <view class="tag tag-green">{{profile.certText}}</view>
+  </view>
+
+  <view class="stats">
+    <view><text>{{profile.stats.published}}</text><label>发起</label></view>
+    <view><text>{{profile.stats.received}}</text><label>接收</label></view>
+    <view><text>{{profile.stats.communicating}}</text><label>沟通中</label></view>
+    <view><text>{{profile.stats.vouchers}}</text><label>可用券</label></view>
+  </view>
+
+  <view class="section-title">律师能力</view>
+  <view class="card menu-card">
+    <view class="cell" data-url="/pages/profile/receiver/index" bindtap="go">
+      <view><view class="cell-label">认证与接收设置</view><view class="cell-sub">服务城市、场景、时间与接收开关</view></view>
+      <view class="cell-value">P05 <text class="cell-arrow">›</text></view>
+    </view>
+    <view class="cell" data-url="/pages/invitation/invitation" bindtap="go">
+      <view><view class="cell-label">站内邀请箱</view><view class="cell-sub">只展示当前律师自己的邀请</view></view>
+      <view class="cell-value">查看 <text class="cell-arrow">›</text></view>
+    </view>
+  </view>
+
+  <view class="section-title">账户与记录</view>
+  <view class="card menu-card">
+    <view class="cell" data-url="/pages/messages/index" bindtap="go"><view class="cell-label">消息通知</view><view class="cell-value">{{profile.unread ? profile.unread + ' 条未读' : '全部已读'}} <text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-url="/pages/vouchers/index" bindtap="go"><view class="cell-label">1 元补贴券</view><view class="cell-value">{{profile.stats.vouchers}} 张可用 <text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-url="/pages/orders/index" bindtap="go"><view class="cell-label">连接费订单</view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+  </view>
+
+  <view class="section-title">支持</view>
+  <view class="card menu-card">
+    <view class="cell" data-url="/pages/feedback/index" bindtap="go"><view class="cell-label">反馈问题</view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-url="/pages/help/index" bindtap="go"><view class="cell-label">帮助与发布须知</view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+    <view class="cell" data-url="/pages/about/index" bindtap="go"><view class="cell-label">关于本 Demo</view><view class="cell-value"><text class="cell-arrow">›</text></view></view>
+  </view>
+
+  <view class="section-title">演示工具</view>
+  <view class="card console-card" data-url="/pages/demo-console/index" bindtap="go">
+    <view class="between">
+      <view><view class="console-title">PAC 演示控制台</view><view class="card-sub">加载场景、推进 Mock 事件，不切换身份</view></view>
+      <view class="console-arrow">→</view>
+    </view>
+  </view>
+</view>

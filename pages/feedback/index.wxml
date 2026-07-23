@@ -1,0 +1,58 @@
+<!-- pages/feedback/index.wxml -->
+<view class="page">
+  <view class="demo-pill">反馈 · 本地 Mock</view>
+  <view class="info-note mt24">反馈仅写入本地模拟数据，不会发送到真实客服系统，请勿填写真实联系方式。</view>
+
+  <!-- 提交成功态 -->
+  <block wx:if="{{submitted}}">
+    <view class="card">
+      <view class="success-box">
+        <view class="s-icon">✓</view>
+        <view class="s-title">反馈已提交</view>
+        <view class="fb-code">{{fbId}}</view>
+        <view class="s-sub">已记录到本地演示数据，不会发送到真实客服系统。</view>
+        <view class="s-sub">感谢您的反馈，PAC 演示环境将用于产品迭代评估。</view>
+        <view class="btn btn-primary btn-block mt16" bindtap="back">返回</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 表单态 -->
+  <block wx:else>
+    <view class="card">
+      <view class="field">
+        <view class="field-label">反馈类型 <text class="req">*</text></view>
+        <picker mode="selector" range="{{types}}" value="{{typeIndex}}" bindchange="onType">
+          <view class="input">{{types[typeIndex]}}</view>
+        </picker>
+      </view>
+      <view class="field">
+        <view class="field-label">关联流程 <text class="req">*</text></view>
+        <picker mode="selector" range="{{flows}}" value="{{flowIndex}}" bindchange="onFlow">
+          <view class="input">{{flows[flowIndex]}}</view>
+        </picker>
+      </view>
+      <view class="field">
+        <view class="field-label">问题描述 <text class="req">*</text></view>
+        <textarea class="textarea" placeholder="请描述您遇到的问题或建议（演示环境）" value="{{desc}}" bindinput="onDesc"></textarea>
+      </view>
+      <view class="field">
+        <view class="field-label">联系方式（选填）</view>
+        <input class="input" placeholder="选填；请勿填写真实手机号，演示不会提交" value="{{contact}}" bindinput="onContact" />
+      </view>
+      <view class="field">
+        <view class="field-label">截图（Mock 占位，不调用真实上传）</view>
+        <view class="row wrap" style="gap:16rpx">
+          <view class="upload-thumb" wx:for="{{images}}" wx:key="index" data-i="{{index}}" bindtap="removeImage">{{item}}</view>
+          <view class="upload-box" style="width:140rpx;height:140rpx;padding:0" bindtap="addMockImage" wx:if="{{images.length < 3}}">
+            <view class="ub-plus">+</view>
+          </view>
+        </view>
+        <view class="hint">点击 “+” 模拟上传一张截图，仅本地占位，演示不调用真实上传接口。</view>
+      </view>
+    </view>
+
+    <view class="btn btn-primary btn-block" bindtap="submit" wx:if="{{!submitting}}">提交反馈</view>
+    <view class="btn btn-primary btn-block" wx:else>提交中…</view>
+  </block>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "P02 审核",
+  "usingComponents": {
+    "step-bar": "/components/step-bar/step-bar"
+  }
+}

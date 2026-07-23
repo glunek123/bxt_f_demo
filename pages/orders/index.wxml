@@ -1,0 +1,47 @@
+<!-- pages/orders/index.wxml -->
+<view class="page">
+  <view class="demo-pill">连接费订单 · 本地 Mock</view>
+  <view class="info-note mt24">连接费与律师服务费相互独立。券抵扣为 0 元时不调用微信支付。</view>
+
+  <view class="hint" style="text-align:center;margin-bottom:16rpx">连接订单为只读演示数据；协作完成后订单保持不变，结算以运营对账为准。</view>
+
+  <view class="loading-box" wx:if="{{loading}}"><view class="spin"></view>加载中…</view>
+
+  <block wx:elif="{{list.length === 0}}">
+    <view class="empty">
+      <view class="e-icon">单</view>
+      <view class="e-text">暂无连接订单</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="order" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openOrder">
+      <view class="order-head">
+        <view class="order-id">{{item.id}}</view>
+        <view class="order-status {{item.statusClass}}">{{item.status}}</view>
+      </view>
+      <view class="order-demand">关联需求：{{item.demand}}</view>
+      <view class="order-row"><text>连接费</text><text class="v fee">¥{{item.connectFee}}</text></view>
+      <view class="order-row"><text>券抵扣</text><text class="v">-¥{{item.couponCut}}</text></view>
+      <view class="order-row"><text>实付金额</text><text class="v fee">¥{{item.paid}}</text></view>
+      <view class="order-method">支付方式：{{item.method}}</view>
+    </view>
+  </block>
+
+  <!-- 订单详情弹层 -->
+  <view class="mask" wx:if="{{opened}}" bindtap="closeOrder">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-title">订单详情（演示）</view>
+      <view class="divider"></view>
+      <view class="kv"><text class="k">订单号</text><text class="v">{{opened.id}}</text></view>
+      <view class="kv"><text class="k">关联需求</text><text class="v">{{opened.demand}}</text></view>
+      <view class="kv"><text class="k">连接费</text><text class="v">¥{{opened.connectFee}}</text></view>
+      <view class="kv"><text class="k">券抵扣</text><text class="v">-¥{{opened.couponCut}}</text></view>
+      <view class="kv"><text class="k">实付金额</text><text class="v">¥{{opened.paid}}</text></view>
+      <view class="kv"><text class="k">支付方式</text><text class="v">{{opened.method}}</text></view>
+      <view class="kv"><text class="k">订单状态</text><text class="v">{{opened.status}}</text></view>
+      <view class="order-sep">说明：平台连接费与律师服务费分离；律师服务费由双方另行协商，不在本平台结算（演示）。</view>
+      <view class="btn btn-primary btn-block mt16" bindtap="closeOrder">关闭</view>
+    </view>
+  </view>
+</view>

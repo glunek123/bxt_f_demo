@@ -1,0 +1,35 @@
+<!-- pages/messages/index.wxml -->
+<view class="page">
+  <view class="demo-pill">消息通知 · 本地 Mock</view>
+  <view class="info-note mt24">站内消息为本地模拟，不调用真实订阅消息；点击可跳转对应流程页。</view>
+
+  <view class="loading-box" wx:if="{{loading}}"><view class="spin"></view>加载中…</view>
+
+  <block wx:elif="{{list.length === 0}}">
+    <view class="empty">
+      <view class="e-icon">讯</view>
+      <view class="e-text">暂无消息通知</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="row between" style="padding:8rpx 4rpx 16rpx">
+      <view class="muted">共 {{list.length}} 条</view>
+      <view class="btn btn-ghost btn-sm" bindtap="markAll">一键全部已读</view>
+    </view>
+    <view class="card" style="padding:8rpx 28rpx">
+      <view class="msg-item" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openMsg">
+        <view class="msg-dot {{item.read ? 'read' : ''}}"></view>
+        <view class="msg-body">
+          <view class="msg-head">
+            <view class="msg-title">
+              <text class="mtype mtype-{{item.typeKey}}">{{item.type}}</text>{{item.title}}
+            </view>
+            <view class="msg-time">{{item.time}}</view>
+          </view>
+          <view class="msg-summary">{{item.summary}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

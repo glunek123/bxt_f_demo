@@ -1,0 +1,30 @@
+.step-wrap { display: flex; padding: 20rpx 10rpx 8rpx; }
+.step { position: relative; z-index: 1; flex: 1; text-align: center; }
+.dot {
+  position: relative;
+  z-index: 2;
+  width: 42rpx;
+  height: 42rpx;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9A9AA0;
+  background: #E5E5EA;
+  border-radius: 50%;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+.label { margin-top: 10rpx; color: #9A9AA0; font-size: 21rpx; }
+.line {
+  position: absolute;
+  z-index: 0;
+  top: 20rpx;
+  left: calc(50% + 22rpx);
+  width: calc(100% - 44rpx);
+  height: 2rpx;
+  background: #D8D8DC;
+}
+.step.done .dot, .step.current .dot { color: #FFFFFF; background: #0B1F3A; }
+.step.done .label, .step.current .label { color: #0B1F3A; font-weight: 600; }
+.step.done .line { background: #0B1F3A; }

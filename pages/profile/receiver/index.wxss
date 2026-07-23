@@ -1,0 +1,1 @@
+.switch-row switch { transform: scale(.86); transform-origin: right center; }

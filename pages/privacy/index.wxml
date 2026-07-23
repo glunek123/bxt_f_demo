@@ -1,0 +1,26 @@
+<!-- pages/privacy/index.wxml -->
+<view class="page">
+  <view class="demo-pill">隐私说明 · 高保真静态内容</view>
+
+  <view class="card">
+    <view class="card-title">隐私与数据安全原则</view>
+    <view class="divider"></view>
+    <view class="muted" style="line-height:1.9;font-size:25rpx">
+      <view class="row" style="margin-bottom:16rpx"><text class="tag tag-navy" style="margin-right:12rpx">1</text><text>服务端敏感检测先于 AI 调用：原始内容在进入任何模型前完成敏感字段识别与拦截。</text></view>
+      <view class="row" style="margin-bottom:16rpx"><text class="tag tag-navy" style="margin-right:12rpx">2</text><text>AI 只接收最小化、脱敏后的内容，不接触完整案情原文。</text></view>
+      <view class="row" style="margin-bottom:16rpx"><text class="tag tag-navy" style="margin-right:12rpx">3</text><text>用户确认的结构化字段才是发布真值，AI 整理结果不可直接作为业务依据。</text></view>
+      <view class="row" style="margin-bottom:16rpx"><text class="tag tag-navy" style="margin-right:12rpx">4</text><text>Demo 不保存真实原始案情；演示数据均为虚构律师、虚构法院、虚构城市。</text></view>
+      <view class="row"><text class="tag tag-navy" style="margin-right:12rpx">5</text><text>MVP 不采集企微群聊正文，协作过程不入仓原始会话内容。</text></view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">演示环境特别声明</view>
+    <view class="divider"></view>
+    <view class="muted" style="line-height:1.9;font-size:25rpx">
+      <view>· 本原型为 PAC 会议演示用途，所有接口为本地 Mock，不连接真实后端。</view>
+      <view>· 不调用真实微信支付、真实企业微信、真实登录与真实订阅消息。</view>
+      <view>· 手机号等展示均为脱敏虚构数据（如 138****8000），请勿填写真实信息。</view>
+    </view>
+  </view>
+</view>

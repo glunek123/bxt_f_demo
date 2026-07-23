@@ -1,0 +1,158 @@
+<view class="page with-action" wx:if="{{view}}">
+  <view class="between">
+    <view class="demo-pill">P02 · 发起方视图</view>
+    <view class="tag tag-gray">不展示候选信息</view>
+  </view>
+
+  <view class="card status-card mt24">
+    <view class="row gap16">
+      <view class="status-orb {{view.status === 'CLOSED_CONNECTED' ? 'green' : (view.status === 'PAYMENT_TIMEOUT' || view.status === 'JOIN_EXCEPTION' ? 'red' : '')}}">{{meta[3]}}</view>
+      <view class="flex1">
+        <view class="status-title">{{meta[0]}}</view>
+        <view class="card-sub">{{meta[1]}}</view>
+      </view>
+    </view>
+    <step-bar current="{{meta[2]}}"></step-bar>
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <view class="card-title">{{view.demand.scene}} · {{view.demand.city}}</view>
+      <view class="tag tag-navy">V{{view.demand.versionNo}}</view>
+    </view>
+    <view class="kv"><view class="k">协作事项</view><view class="v">{{view.demand.serviceItem}}</view></view>
+    <view class="kv"><view class="k">办理机构</view><view class="v">{{view.demand.institution}}</view></view>
+    <view class="kv"><view class="k">停止匹配</view><view class="v">{{view.demand.matchDeadlineAtText}}</view></view>
+    <view class="kv"><view class="k">期望服务</view><view class="v">{{view.demand.serviceAtText}}</view></view>
+  </view>
+
+  <view wx:if="{{view.status === 'AUDITING' || view.status === 'MANUAL_REVIEW'}}" class="info-note">
+    审核通过后，系统会先预占健康空群，再冻结候选快照并发送第一批邀请。正式页面不提供“模拟审核”按钮。
+  </view>
+
+  <view wx:if="{{view.status === 'NEED_EDIT' && view.demand.auditErrors.length}}" class="card">
+    <view class="card-title">需要修改的信息</view>
+    <view wx:for="{{view.demand.auditErrors}}" wx:key="field" class="danger-note mt16">{{item.message}}</view>
+  </view>
+
+  <view wx:if="{{view.status === 'MATCH_PREPARING'}}" class="notice">
+    当前没有可用健康空群。系统处于等待状态，尚未发送任何邀请，也不会先匹配后补群。
+  </view>
+
+  <view wx:if="{{view.status === 'MATCHING'}}" class="card">
+    <view class="between">
+      <view class="card-title">第 {{view.round.currentBatchNo}} 批邀请中</view>
+      <view class="tag tag-blue">{{view.round.candidateCount}} 人候选快照</view>
+    </view>
+    <view class="batch-dots mt24">
+      <view wx:for="{{view.round.batchPlan}}" wx:key="index" class="batch-dot {{index + 1 < view.round.currentBatchNo ? 'done' : ''}} {{index + 1 === view.round.currentBatchNo ? 'on' : ''}}">
+        <text>第 {{index + 1}} 批</text><text>{{item}} 人</text>
+      </view>
+    </view>
+    <view class="card-sub mt24">同一轮自动切批沿用已预占协作群；候选顺序与评分详情不对发起方展示。</view>
+  </view>
+
+  <view wx:if="{{view.status === 'WAIT_PAY'}}" class="card payment-card">
+    <view class="between"><view class="card-title">连接信息服务费</view><view class="countdown">{{paymentCountdown}}</view></view>
+    <view class="price"><text class="currency">¥</text>1.00</view>
+    <view wx:if="{{view.availableVoucher}}" class="voucher-row">
+      <view><view class="voucher-name">1 元补贴券</view><view class="card-sub">用于本次发布后的连接费</view></view>
+      <view class="tag tag-green">抵扣 ¥1</view>
+    </view>
+    <view class="info-note mt24">连接费与律师服务费相互独立，不影响候选排序。券抵扣后创建内部零支付订单，不调用微信支付。</view>
+  </view>
+
+  <view wx:if="{{view.status === 'PAYMENT_CONFIRMING'}}" class="card">
+    <view class="between"><view class="card-title">支付结果确认中</view><view class="tag tag-warn">请勿重复支付</view></view>
+    <view class="card-sub mt16">正式流程以服务端回调或主动查询结果为准，客户端返回结果不作为最终依据。</view>
+  </view>
+
+  <view wx:if="{{view.status === 'PAYMENT_REFUNDED'}}" class="card">
+    <view class="between"><view class="card-title">退款已完成</view><view class="tag tag-green">REFUNDED</view></view>
+    <view class="kv"><view class="k">退款方式</view><view class="v">{{view.order.refundMethod}}</view></view>
+    <view class="text-action mt16" bindtap="orders">查看连接费订单</view>
+  </view>
+
+  <view wx:if="{{view.status === 'WAIT_JOIN'}}" class="card">
+    <view class="card-title">双方入群状态</view>
+    <view class="join-row"><view><view class="join-name">发起律师（我）</view><view class="card-sub">{{view.join.initiator === 'NOT_OPENED' ? '尚未打开入口' : view.join.initiator === 'ENTRY_OPENED' ? '入口已打开，等待回调' : view.join.initiator === 'JOINED' ? '回调确认已入群' : '入群异常'}}</view></view><view class="tag {{view.join.initiator === 'JOINED' ? 'tag-green' : 'tag-warn'}}">{{view.join.initiator}}</view></view>
+    <view class="join-row"><view><view class="join-name">接收律师</view><view class="card-sub">{{view.join.receiver === 'NOT_OPENED' ? '等待对方打开入口' : view.join.receiver === 'ENTRY_OPENED' ? '入口已打开，等待回调' : view.join.receiver === 'JOINED' ? '回调确认已入群' : '入群异常'}}</view></view><view class="tag {{view.join.receiver === 'JOINED' ? 'tag-green' : 'tag-warn'}}">{{view.join.receiver}}</view></view>
+    <view class="danger-note mt24">打开二维码或跳转企微，只表示入口已暴露；必须由企微回调或查询对账确认 JOINED。</view>
+  </view>
+
+  <view wx:if="{{view.status === 'COMMUNICATING'}}" class="card dark">
+    <view class="card-title">安全沟通提示</view>
+    <view class="dark-copy">平台不采集群聊消息正文。请在群内自行确认服务边界、时间与律师服务费用。</view>
+  </view>
+
+  <view wx:if="{{view.status === 'CLOSED_CONNECTED'}}" class="info-note">
+    “结束协作记录”仅结束平台连接记录，不构成平台对法律服务已完成、质量或费用结算的确认。
+  </view>
+
+  <view class="section-title">进度记录</view>
+  <view class="card">
+    <view wx:if="{{view.timeline.length}}" class="timeline">
+      <view wx:for="{{view.timeline}}" wx:key="id" class="timeline-item">
+        <view class="timeline-title">{{item.label}}</view>
+        <view class="timeline-desc">{{item.description}}</view>
+        <view class="timeline-time">{{item.occurredAtText}}</view>
+      </view>
+    </view>
+    <view wx:else class="empty"><view class="empty-sub">状态更新后会显示在这里。</view></view>
+  </view>
+
+  <view class="action-bar">
+    <button wx:if="{{view.status === 'NEED_EDIT' || view.status === 'NO_MATCH' || view.status === 'EXPIRED'}}" class="btn btn-primary btn-block" bindtap="goEdit">修改协作内容</button>
+    <button wx:elif="{{view.status === 'WAIT_PAY'}}" class="btn btn-primary btn-block" loading="{{busy}}" bindtap="pay">{{view.availableVoucher ? '使用补贴券，确认连接' : '支付 1 元并连接'}}</button>
+    <button wx:elif="{{view.status === 'PAYMENT_CONFIRMING'}}" class="btn btn-secondary btn-block" disabled>等待服务端确认</button>
+    <button wx:elif="{{view.status === 'WAIT_JOIN' && view.join.initiator === 'NOT_OPENED'}}" class="btn btn-primary btn-block" bindtap="openEntry">打开企微入群入口</button>
+    <button wx:elif="{{view.status === 'WAIT_JOIN'}}" class="btn btn-secondary btn-block" disabled>等待企微回调确认</button>
+    <view wx:elif="{{view.status === 'COMMUNICATING'}}" class="dual-actions">
+      <button class="btn btn-primary flex1" bindtap="showClose">结束本次协作记录</button>
+      <button class="btn btn-danger fail-btn" bindtap="showFailure">沟通未达成</button>
+    </view>
+    <button wx:elif="{{view.status === 'NEGOTIATION_FAILED' || view.status === 'PAYMENT_TIMEOUT' || view.status === 'JOIN_EXCEPTION'}}" class="btn btn-primary btn-block" bindtap="showNext">选择下一步</button>
+    <button wx:elif="{{view.status === 'PAYMENT_REFUNDED'}}" class="btn btn-secondary btn-block" bindtap="orders">查看退款订单</button>
+    <view wx:elif="{{view.status === 'CLOSED_CONNECTED' || view.status === 'CLOSED'}}" class="dual-actions">
+      <button class="btn btn-primary flex1" bindtap="republish">再发一单</button>
+      <button class="btn btn-secondary fail-btn" bindtap="feedback">反馈问题</button>
+    </view>
+    <button wx:else class="btn btn-secondary btn-block" bindtap="home">返回首页</button>
+  </view>
+
+  <view wx:if="{{closeOpen}}" class="mask">
+    <view class="sheet">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">结束本次协作记录？</view>
+      <view class="info-note mt24">该操作只结束平台连接记录，不代表平台确认法律服务已经履行，也不评价接收律师的服务质量。</view>
+      <button class="btn btn-primary btn-block mt32" bindtap="confirmClose">确认结束记录</button>
+      <button class="btn btn-secondary btn-block" bindtap="hideClose">继续沟通</button>
+    </view>
+  </view>
+
+  <view wx:if="{{failureOpen}}" class="mask">
+    <view class="sheet">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">沟通未达成的原因</view>
+      <view class="mt24">
+        <view wx:for="{{reasons}}" wx:key="*this" class="choice" data-reason="{{item}}" bindtap="pickReason">
+          <text>{{item}}</text><view class="check {{failureReason === item ? 'on' : ''}}"></view>
+        </view>
+      </view>
+      <button class="btn btn-danger btn-block mt24" bindtap="submitFailure">确认沟通未达成</button>
+      <button class="btn btn-secondary btn-block" bindtap="hideFailure">取消</button>
+    </view>
+  </view>
+
+  <view wx:if="{{nextOpen}}" class="mask">
+    <view class="sheet">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">选择下一步</view>
+      <view class="card-sub">重新匹配会创建新轮次、新快照和新群，并排除全部历史已触达律师。</view>
+      <button class="btn btn-primary btn-block mt32" loading="{{busy}}" bindtap="rematch">重新匹配</button>
+      <button class="btn btn-secondary btn-block" bindtap="modifyDemand">修改协作内容</button>
+      <button class="btn btn-danger btn-block" bindtap="endDemand">结束需求</button>
+      <button class="btn btn-secondary btn-block" bindtap="hideNext">取消</button>
+    </view>
+  </view>
+</view>

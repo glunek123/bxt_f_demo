@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "P04 连接入群",
+  "usingComponents": {
+    "step-bar": "/components/step-bar/step-bar"
+  }
+}

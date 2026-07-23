@@ -1,0 +1,20 @@
+{
+  "description": "异地律师协作网络 MVP 演示 Demo（本地 Mock，仅用于 PAC 会议演示）",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "bigPackageSizeSupport": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "latest",
+  "appid": "touristappid",
+  "projectname": "lawyer-collab-mvp",
+  "condition": {}
+}

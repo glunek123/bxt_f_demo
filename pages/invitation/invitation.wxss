@@ -1,0 +1,13 @@
+.status-card { margin-top: 30rpx; }
+.countdown { color: #FF3B30; font-size: 31rpx; font-weight: 700; font-variant-numeric: tabular-nums; }
+.invite-title { margin-top: 28rpx; font-size: 38rpx; font-weight: 700; }
+.initiator { font-size: 30rpx; font-weight: 650; }
+.voucher-result { background: linear-gradient(145deg, #F2FFF5, #FFFFFF); }
+.result-title { margin-top: 18rpx; font-size: 30rpx; font-weight: 650; }
+.success-result { text-align: center; }
+.result-mark {
+  width: 82rpx; height: 82rpx; margin: 0 auto; display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF; background: #34C759; border-radius: 50%; font-size: 38rpx; font-weight: 700;
+}
+.action-row { display: flex; gap: 14rpx; }
+.reject-btn { width: 34%; }

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "协作详情",
+  "usingComponents": {
+    "step-bar": "/components/step-bar/step-bar"
+  }
+}
